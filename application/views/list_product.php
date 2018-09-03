@@ -11,10 +11,6 @@
 				<th class="font-weight-medium">Ngày Đăng</th>
 				<th class="font-weight-medium">Xóa</th>
 				<th class="font-weight-medium">Sửa</th>
-
-					<i class="mdi mdi-pencil"></i>
-
-
 			</tr>
 			</thead>
 			<?php
@@ -29,8 +25,8 @@
 						echo "<th>$item[product_skv]</th>";
 						echo "<th>Danh Mục</th>";
 						echo "<th>$item[product_date]</th>";
-						echo "<th><a href='".base_url()."/addproduct/del/$item[id]'>X</a></th>";
-						echo "<th><a href='".base_url()."/addproduct/edit/$item[id]'><i class=\"mdi mdi-pencil\"></i></a></th>";
+						echo "<th><a href='".base_url()."addproduct/del/$item[id]'>X</a></th>";
+						echo "<th><a href='".base_url()."addproduct/edit/$item[id]'><i class=\"mdi mdi-pencil\"></i></a></th>";
 						echo "</tr>";
 					}
 				}

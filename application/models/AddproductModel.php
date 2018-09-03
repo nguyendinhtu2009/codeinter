@@ -13,4 +13,12 @@ class AddproductModel extends CI_Model{
 		$this->db->limit(10);
 		return $this->db->get($this->_table)->result_array();
 	}
+	public function delProduct($id){
+		$this->db->where("id",$id);
+		$this->db->delete($this->_table);
+	}
+	public function editProduct($data,$id){
+		$this->db->where("id",$id);
+		$this->db->update($this->_table,$data);
+	}
 }

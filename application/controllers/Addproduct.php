@@ -18,7 +18,7 @@ class Addproduct extends CI_Controller
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('skv', 'skv', 'required');
-		$this->form_validation->set_rules('nameproduct', 'Passnameproductword', 'required',
+		$this->form_validation->set_rules('nameproduct', 'nameproduct', 'required',
 			array('required' => 'You must provide a %s.')
 		);
 		$this->form_validation->set_rules('maproduct', 'maproduct Confirmation', 'required');
@@ -33,8 +33,10 @@ class Addproduct extends CI_Controller
 				"product_mt"=>$this->input->post('mtprodcut')
 			);
 			$this->AddproductModel->insertProduct($data_insert);
+			echo "<script>alert('Đăng Sản Phẩm Thành Công');</script>";
+			redirect(base_url()."addproduct/listproduct");
 		}else{
-			echo "<script>alert('ban chua dien thong tin');</script>";
+			echo "<script>alert('Chưa Điền Thông Tin Anh (Chị) Ơi');</script>";
 		}
 
 
@@ -51,5 +53,39 @@ class Addproduct extends CI_Controller
 		$this->load->view('list_product',$data);
 		$this->load->view('footer');
 	}
+	public function del($id){
 
+		$this->load->model('AddproductModel');
+		$this->AddproductModel->delProduct($id);
+		redirect(base_url()."addproduct/listproduct");
+	}
+	public function edit($id)
+	{
+		$this->load->model('AddproductModel');
+
+			$this->load->library("form_validation");
+			$this->form_validation->set_rules("skv", "SKV", "required");
+			$this->form_validation->set_rules("nameproduct", "Ten San Pham", "required");
+			$this->form_validation->set_rules("maproduct", "Mã Sản Phẩm", "required");
+			$this->form_validation->set_rules("mtprodcut", "Mô Tả Sản Phẩm", "required");
+			if ($this->form_validation->run() == TRUE) {
+				$data_update = array(
+					"product_skv" => $this->input->post('skv'),
+					"product_name" => $this->input->post("nameproduct"),
+					"product_msp" => $this->input->post("maproduct"),
+					"product_mt" => $this->input->post("mtprodcut")
+				);
+
+
+				$data['info'] = $this->AddproductModel->editProduct($id, $data_update);
+				$this->session->set_flashdata("flash_mess", "sucess");
+				redirect(base_url() . "addproduct/listproduct");$this->load->view('Edit_product',$data);
+			}
+
+		
+		$this->load->view('header');
+
+		$this->load->view('footer');
+
+	}
 }

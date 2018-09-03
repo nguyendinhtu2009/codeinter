@@ -173,7 +173,7 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="list-unstyled">
-                                    <li><a href="#">Tạo Sản Phẩm</a></li>
+                                    <li><a href="<?php echo base_url(); ?>addproduct/add">Tạo Sản Phẩm</a></li>
                                     <li><a href="#">Cập Nhật</a></li>
                                     <li><a href="#">Category</a></li>
                                     <li><a href="#">Danh Sách</a></li>

@@ -2,7 +2,7 @@
 	/**
 	* 
 	*/
-include "API/lazada/LazopSdk.php";
+require_once 'API/lazada/LazopSdk.php';
 require_once 'API/lazada/PHPExcel.php';
 require_once 'API/lazada/PHPExcel/IOFactory.php';
 
@@ -16,8 +16,8 @@ require_once 'API/lazada/PHPExcel/IOFactory.php';
 			return $data->result();
 		}
 
-		public function cancel_order_Laz($accessToken, $order_id){
-			$c = new LazopClient(url,appkey,appSecret);
+		public function cancel_order_Laz($accessToken, $appkey, $appsecret, $ItemID){
+			$c = new LazopClient('https://api.lazada.vn/rest',$appkey,$appsecret);
 			$request = new LazopRequest('/order/cancel');
 			$request->addApiParam('reason_detail','Out of stock');
 			$request->addApiParam('reason_id','15');
@@ -25,16 +25,16 @@ require_once 'API/lazada/PHPExcel/IOFactory.php';
 			return $c->execute($request, $accessToken);
 		}
 
-		public function ReallyToShip_Laz($accessToken, $ItemID){
-			$c = new LazopClient(url,appkey,appSecret);
+		public function ReallyToShip_Laz($accessToken, $appkey, $appsecret, $ItemID){
+			$c = new LazopClient('https://api.lazada.vn/rest',$appkey,$appsecret);
 			$request = new LazopRequest('/order/rts');
 			$request->addApiParam('delivery_type','dropship');
 			$request->addApiParam('order_item_ids','['.$ItemID.']');
 			return $c->execute($request, $accessToken);
 		}
 
-		public function Get_Document_Laz($accessToken, $ItemID){
-			$c = new LazopClient(url,appkey,appSecret);
+		public function Get_Document_Laz($accessToken, $appkey, $appsecret, $ItemID){
+			$c = new LazopClient('https://api.lazada.vn/rest',$appkey,$appsecret);
 			$request = new LazopRequest('/order/document/get','GET');
 			$request->addApiParam('doc_type','shippingLabel');
 			$request->addApiParam('order_item_ids','['.$ItemID.']');

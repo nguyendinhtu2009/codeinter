@@ -2,7 +2,7 @@
 /**
 * 
 */
-class OrderDetail extends CI_Controller
+class OrderLazDetail extends CI_Controller
 {
 	
 	public function index()
@@ -10,7 +10,7 @@ class OrderDetail extends CI_Controller
 		$this->load->model('OrderDetailModel');
 		$data['data'] = $this->OrderDetailModel->getOrder_Laz();
 		$this->load->view('header');
-		$this->load->view('OrderDetail', $data);
+		$this->load->view('OrderDetailView', $data);
 		$this->load->view('footer');
 		
 	}

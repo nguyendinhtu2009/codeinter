@@ -256,5 +256,9 @@ class ProductShopeeCreatModel extends CI_Model
 		$objWriter->save('php://output');
 	return $objWriter;
 	}
+
+	public function Shopee_Import_Product(){
+		return TRUE;
+	}
 	
 }

@@ -43,5 +43,13 @@ class Addproduct extends CI_Controller
 		$this->load->view('add_product');
 		$this->load->view('footer');
 	}
+	public function listproduct(){
+		$this->load->helper("url");
+		$this->load->model('AddproductModel');
+		$data['info']=$this->AddproductModel->listAddProduct();
+		$this->load->view('header');
+		$this->load->view('list_product',$data);
+		$this->load->view('footer');
+	}
 
 }

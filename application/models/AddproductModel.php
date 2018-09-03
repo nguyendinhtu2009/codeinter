@@ -5,9 +5,12 @@ class AddproductModel extends CI_Model{
 		parent::__construct();
 	}
 	public function insertProduct($data){
-		$query=$this->db->insert($this->_table,$data);
+		$this->db->insert($this->_table,$data);
 	}
 	public function listAddProduct(){
-		510634937781185
+		$this->db->select("id,product_skv,product_name,product_msp,product_mt,product_date");
+		$this->db->order_by("id","desc");
+		$this->db->limit(10);
+		return $this->db->get($this->_table)->result_array();
 	}
 }

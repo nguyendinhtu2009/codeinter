@@ -176,7 +176,7 @@
                                     <li><a href="<?php echo base_url(); ?>addproduct/add">Tạo Sản Phẩm</a></li>
                                     <li><a href="#">Cập Nhật</a></li>
                                     <li><a href="#">Category</a></li>
-                                    <li><a href="#">Danh Sách</a></li>
+                                    <li><a href="<?php echo base_url(); ?>addproduct/listproduct">Danh Sách</a></li>
                                     <li><a href="#">Kho Ảnh</a></li>
                                 </ul>
                             </li>

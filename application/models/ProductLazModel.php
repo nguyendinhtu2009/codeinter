@@ -7,7 +7,7 @@ ini_set('max_execution_time', 0);
 /**
 * 
 */
-class Product_Laz extends CI_Model
+class ProductLazModel extends CI_Model
 {
 
 	public function Get_Product($start_date, $accessToken, $appkey, $appsecret){
@@ -183,6 +183,93 @@ class Product_Laz extends CI_Model
 						$this->db->where('item_id', $post[$i]->item_id);
             			$this->db->update('product', $data);
 						$file = 'log.txt';
+						$current = file_get_contents($file);
+						$current .= "\n".hatime."|".$post[$i]->item_id."|".$seller_id."|".$res_a;
+						file_put_contents($file, $current);
+						$a['fail'][] = true;
+					}
+					}
+				}
+					
+			}
+			return $a;
+		}
+
+
+		public function Update_Product_Laz($seller_id, $accessToken ,$appkey, $appsecret){
+			$a = array();
+			$post = $this->db->query("SELECT * FROM `product` WHERE `status` = 0 AND `update_sellerid` NOT LIKE '%{$seller_id}%'");
+			$post = $post->result();
+			for($i=0;$i<count($post);$i++){
+
+				$xml = '';
+				$xml .= '<?xml version="1.0" encoding="UTF-8" ?> 
+							<Request>
+							     <Product>';
+				$xml .= '<PrimaryCategory>'.$post[$i]->primarycategory.'</PrimaryCategory>';
+				$xml .= '<SPUId>'.$post[$i]->spuid.'</SPUId>';
+				$xml .= '<AssociatedSku>'.$post[$i]->associatedsku.'</AssociatedSku>';
+				$xml .= '<Attributes>';
+				$xml .= '<name>'.$post[$i]->name.'</name>';
+				$xml .= '<short_description><![CDATA['.$post[$i]->short_description.']]></short_description>';
+				$xml .= '<description><![CDATA['.$post[$i]->description_laz.']]></description>';
+				$xml .= '<brand>'.$post[$i]->brand.'</brand>';
+				$xml .= '<model>'.$post[$i]->model.'</model>';
+				$xml .= '<warranty_type>'.$post[$i]->warranty_type.'</warranty_type>';
+				$xml .= '<warranty>'.$post[$i]->warranty.'</warranty>';
+				$xml .= '<kid_years>'.$post[$i]->kid_years.'</kid_years>';
+				$xml .= '</Attributes>';
+				$xml .= '<Skus>';
+				$sku = json_decode($post[$i]->sellersku, TRUE);
+				for($j=0;$j<count($sku);$j++){
+				$xml .= '<Sku>';
+					foreach ($sku[$j] as $key => $value) {
+						$xml .= '<'.$key.'>'.$value.'</'.$key.'>';
+					}
+			    $xml .= '                        
+			            <package_length>'.$post[$i]->package_length.'</package_length>                 
+			            <package_height>'.$post[$i]->package_height.'</package_height>                
+			            <package_weight>'.$post[$i]->package_weight.'</package_weight>                 
+			            <package_width>'.$post[$i]->package_width.'</package_width>                 
+			            <package_content>No</package_content>                
+			            <Images>';
+				$img = explode(',', $sku[$j]['image']);
+				    for($k=0;$k<count($img);$k++){
+				    	if($img[$k] != null){
+				    	$xml .= '<Image>'.$img[$k].'</Image>';
+				    	}
+				    }
+
+			    $xml .= '</Images></Sku>';
+			    } 
+				$xml .= '</Skus>';
+				$xml .= '</Product>';
+				$xml .= '</Request>';
+				if($post[$i]->primarycategory != null){
+					$c = new LazopClient('https://api.lazada.vn/rest',$appkey,$appsecret);
+					$request = new LazopRequest('/product/update');
+					$request->addApiParam('payload',$xml);
+					$res_a = $c->execute($request, $accessToken);
+					$res = json_decode($res_a, TRUE);
+					if($res['code'] == 0){
+						$data = array('update_sellerid' => $post[$i]->seller_id.','.$seller_id);
+						$this->db->where('item_id', $post[$i]->item_id);
+            			$this->db->update('product', $data);
+						$a['success'][] = true;
+						$file = 'update_log.txt';
+						$current = file_get_contents($file);
+						$current .= "\n".hatime."|".$post[$i]->item_id."|".$seller_id."|DONE";
+						file_put_contents($file, $current);
+					}else{
+						if($res['detail'][0]['field'] == 'SellerSku'){
+						$data = array('update_sellerid' => $post[$i]->seller_id.','.$seller_id);
+						$this->db->where('item_id', $post[$i]->item_id);
+            			$this->db->update('product', $data);
+						}else{
+						$data = array('need_update' => 2);
+						$this->db->where('item_id', $post[$i]->item_id);
+            			$this->db->update('product', $data);
+						$file = 'update_log.txt';
 						$current = file_get_contents($file);
 						$current .= "\n".hatime."|".$post[$i]->item_id."|".$seller_id."|".$res_a;
 						file_put_contents($file, $current);

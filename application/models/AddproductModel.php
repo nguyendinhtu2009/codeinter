@@ -17,6 +17,10 @@ class AddproductModel extends CI_Model{
 		$this->db->where("id",$id);
 		$this->db->delete($this->_table);
 	}
+	public function getByIdProduct($id){
+		$this->db->where("id",$id);
+		return $this->db->get($this->_table)->row_array();
+	}
 	public function editProduct($data,$id){
 		$this->db->where("id",$id);
 		$this->db->update($this->_table,$data);

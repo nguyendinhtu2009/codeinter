@@ -1,8 +1,7 @@
- <?php var_dump($data); ?>
 <body>
  <div class="container">
   <br />
-  <h3 align="center">How to Import Excel Data into Mysql in Codeigniter</h3>
+  <h3 align="center">Import Data Product From Shopee</h3>
   <form method="post" id="import_form" enctype="multipart/form-data">
    <p>
    <input type="file" name="file" id="file" required accept=".xls, .xlsx" /></p>
@@ -33,8 +32,7 @@ $(document).ready(function(){
    cache:false,
    processData:false,
    success:function(data){
-    $('#file').val('');
-    alert(data);
+    alert('Import thành công!');
    }
   })
  });

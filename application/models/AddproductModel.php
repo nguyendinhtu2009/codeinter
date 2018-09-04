@@ -24,5 +24,6 @@ class AddproductModel extends CI_Model{
 	public function editProduct($data,$id){
 		$this->db->where("id",$id);
 		$this->db->update($this->_table,$data);
+
 	}
 }

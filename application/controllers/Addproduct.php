@@ -56,25 +56,21 @@ class Addproduct extends CI_Controller
 		$this->AddproductModel->delProduct($id);
 		redirect(base_url()."addproduct/listproduct");
 	}
-	public function edit()
+	public function edit($id)
 	{
-		$id=$this->uri->segment(3);
 		$this->load->model('AddproductModel');
 		$data['info']=$this->AddproductModel->getByIdProduct($id);
 		if($this->input->post('ok')){
 			$this->load->library("form_validation");
-			if ($this->form_validation->run() == TRUE) {
 				$data_update = array(
 					'product_skv' => $this->input->post('skv'),
 					'product_name' => $this->input->post('nameproduct'),
 					'product_msp' => $this->input->post('maproduct'),
 					'product_mt' => $this->input->post('mtprodcut')
 				);
-				$this->load->model('AddproductModel');
-				$data['info'] = $this->AddproductModel->editProduct($data_update,$id);
-				$this->session->set_flashdata("flash_mess", "sucess");
+				//$this->load->model('AddproductModel');
+				$this->AddproductModel->editProduct($data_update,$id);
 				redirect(base_url() . "addproduct/listproduct");
-			}
 		}
 		$this->load->view('header');
 		$this->load->view('editProduct',$data);

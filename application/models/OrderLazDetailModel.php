@@ -6,8 +6,11 @@ require_once 'API/lazada/LazopSdk.php';
 require_once 'API/lazada/PHPExcel.php';
 require_once 'API/lazada/PHPExcel/IOFactory.php';
 
-	class OrderDetailModel extends CI_Model
+	class OrderLazDetailModel extends CI_Model
 	{
+		public function __contruct(){
+		parent::__construct();
+		}
 		
 		public function getOrder_Laz()
 		{

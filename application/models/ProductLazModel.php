@@ -9,6 +9,9 @@ ini_set('max_execution_time', 0);
 */
 class ProductLazModel extends CI_Model
 {
+	public function __contruct(){
+		parent::__construct();
+	}
 
 	public function Get_Product($start_date, $accessToken, $appkey, $appsecret){
 		$c = new LazopClient('https://api.lazada.vn/rest',$appkey,$appsecret);

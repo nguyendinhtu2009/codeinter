@@ -7,7 +7,11 @@ require_once 'API/lazada/PHPExcel/IOFactory.php';
 */
 class AccountLazModel extends CI_Model
 {
-	protect $_num;
+	protected $_num;
+	public function __contruct(){
+		parent::__construct();
+	}
+	
 	public function Get_Seller_Info($accessToken, $appkey, $appsecret){
 		$c = new LazopClient('https://api.lazada.vn/rest', $appkey, $appsecret);
 		$request = new LazopRequest('/seller/get','GET');

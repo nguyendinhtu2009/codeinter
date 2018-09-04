@@ -6,10 +6,9 @@
 				<th class="font-weight-medium">STT</th>
 				<th class="font-weight-medium">Tên Sản Phẩm </th>
 				<th class="font-weight-medium">Mã Sản Phẩm</th>
-				<th class="font-weight-medium">SKV</th>
+				<th class="font-weight-medium">SKU</th>
 				<th class="font-weight-medium">Danh Mục</th>
 				<th class="font-weight-medium">Ngày Đăng</th>
-				<th class="font-weight-medium">Ảnh</th>
 				<th class="font-weight-medium">Xóa</th>
 				<th class="font-weight-medium">Sửa</th>
 			</tr>

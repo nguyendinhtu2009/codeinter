@@ -10,6 +10,7 @@
 							echo "<img src='".base_url()."uploads/uploads_product/$img[$i]' width='150' style='margin-bottom:10px'/>";
 						}
 					}
+					echo "<h5>$item[product_name]</h5>";
 					echo "</div>";
 				}
 			?>

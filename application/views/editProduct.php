@@ -7,7 +7,7 @@
 <form action="<?php echo base_url()."addproduct/edit/".$info['id'];?>" method="post" enctype="multipart/form-data"/>
 <section>
 	<div class="form-group clearfix">
-		<label class="control-label " for="skv">SKV *</label>
+		<label class="control-label " for="skv">SKU *</label>
 		<div class="">
 			<input class="form-control required" id="skv" name="skv" type="text" size="200px" value="<?php echo $info['product_skv'];?>">
 		</div>

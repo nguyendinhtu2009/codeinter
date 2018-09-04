@@ -82,7 +82,7 @@ class Addproduct extends CI_Controller
 				redirect(base_url() . "addproduct/listproduct");$this->load->view('Edit_product',$data);
 			}
 
-		
+
 		$this->load->view('header');
 
 		$this->load->view('footer');

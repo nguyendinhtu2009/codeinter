@@ -56,9 +56,9 @@ class Addproduct extends CI_Controller
 		$this->AddproductModel->delProduct($id);
 		redirect(base_url()."addproduct/listproduct");
 	}
-	public function edit($id)
+	public function edit()
 	{
-
+		$id=$this->uri->segment(3);
 		$this->load->model('AddproductModel');
 		$data['info']=$this->AddproductModel->getByIdProduct($id);
 		if($this->input->post('ok')){
@@ -79,6 +79,9 @@ class Addproduct extends CI_Controller
 		$this->load->view('header');
 		$this->load->view('editProduct',$data);
 		$this->load->view('footer');
+	}
+	public function update_product(){
+
 	}
 }
 

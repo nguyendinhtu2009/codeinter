@@ -257,8 +257,81 @@ class ProductShopeeCreatModel extends CI_Model
 	return $objWriter;
 	}
 
-	public function Shopee_Import_Product(){
-		return TRUE;
+	public function Shopee_Import_Product($file, $seller_id){
+		$path = $file;
+			   $object = PHPExcel_IOFactory::load($path);
+				   foreach($object->getWorksheetIterator() as $worksheet)
+				   {
+					    $highestRow = $worksheet->getHighestRow();
+					    $highestColumn = $worksheet->getHighestColumn();
+					    for($row=4; $row<=$highestRow; $row++)
+						    {
+						     $tab_1 = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+						     $tab_2 = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+						     $tab_3 = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+						     $tab_4 = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+						     $tab_5 = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+						     $tab_6 = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+						     $data = array(
+						      'id_shopee'  => $tab_1,
+						      'sku'   => $tab_2,
+						      'source'    => $seller_id
+						     );
+							 $this->db->insert('product_shopee', $data);
+						    }
+				   }
+
+			   return FALSE;
+	}
+
+	public function Shopee_Update_Product(){
+		$objPHPExcel = new PHPExcel();
+		// Create a first sheet, representing sales data
+		$objPHPExcel->setActiveSheetIndex(0);
+		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Số ID sản phẩm');
+		$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Mã SKU gốc');
+		$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Tên sản phẩm');
+		$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Mã ID ngành hàng');
+		$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Trọng Lượng');
+		$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Giá');
+		$objPHPExcel->getActiveSheet()->setCellValue('G1', 'Số lượng');
+		$objPHPExcel->getActiveSheet()->setCellValue('H1', 'Giao hàng');
+		$row = 3;
+		$this->load->database();
+		$data = $this->db->get('product');
+		$data = $data->result();
+	for($i=0;$i<count($data);$i++){
+				$cot = $row++;
+				$sku = json_decode($data[$i]->sellersku, TRUE);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$cot, $data[$i]->shopee_category);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cot, $data[$i]->name);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cot, strip_tags(html_entity_decode($data[$i]->short_description)));
+			if(count($sku) == 1){
+				$weight = $sku[0]['package_weight'] * 1000;
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$cot, $sku[0]['price']);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$cot, $sku[0]['Available']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$cot, $weight);
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$cot, 2);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$cot, $sku[0]['SellerSku']);
+			}
+	}
+
+		// Rename sheet
+		$objPHPExcel->getActiveSheet()->setTitle('Sheet1');
+		// Create a new worksheet, after the default sheet
+		$objPHPExcel->createSheet();
+		// Add some data to the second sheet, resembling some different data types
+		//$objPHPExcel->setActiveSheetIndex(1);
+		//$objPHPExcel->getActiveSheet()->setCellValue('A1', 'loading');
+		// Rename 2nd sheet
+		//$objPHPExcel->getActiveSheet()->setTitle('Sheet2');
+		// Redirect output to a client’s web browser (Excel5)
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="ProductShopeeUpdate.xls"');
+		header('Cache-Control: max-age=0');
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+		$objWriter->save('php://output');
+	return $objWriter;
 	}
 	
 }

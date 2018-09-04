@@ -33,8 +33,6 @@ class Addproduct extends CI_Controller
 			$this->AddproductModel->insertProduct($data_insert);
 			echo "<script>alert('Đăng Sản Phẩm Thành Công');</script>";
 			redirect(base_url()."addproduct/listproduct");
-		}else{
-			echo "<script>alert('Chưa Điền Thông Tin Anh (Chị) Ơi');</script>";
 		}
 
 

@@ -30,7 +30,16 @@ class Addproduct extends CI_Controller
 				"product_msp"=>$this->input->post('maproduct'),
 				"product_mt"=>$this->input->post('mtprodcut')
 			);
-
+			if ($_FILES['files']['name']) {
+				$config['upload_path'] = './uploads/uploads_product';
+				$config['allowed_types'] = 'gif|jpg|png';
+				$this->load->library("upload", $config);
+				$this->upload->initialize($config);
+				if ($this->upload->do_upload('files')) {
+					$fileData = $this->upload->data();
+					$dataInsert['product_img'] = $fileData['file_name'];
+				}
+			}
 				$this->AddproductModel->insertProduct($data_insert);
 				echo "<script>alert('Đăng Sản Phẩm Thành Công');</script>";
 				redirect(base_url()."addproduct/listproduct");
@@ -53,28 +62,20 @@ class Addproduct extends CI_Controller
 		$this->AddproductModel->delProduct($id);
 		redirect(base_url()."addproduct/listproduct");
 	}
-	public function edit()
+	public function edit($id)
 	{
-		$id=$this->uri->segment(3);
 		$this->load->model('AddproductModel');
 		$data['info']=$this->AddproductModel->getByIdProduct($id);
 		if($this->input->post('ok')){
-<<<<<<< HEAD
-=======
-			$this->load->library("form_validation");
-			if ($this->form_validation->run() == TRUE) {
->>>>>>> parent of d4eb88e... ssss
 				$data_update = array(
 					'product_skv' => $this->input->post('skv'),
 					'product_name' => $this->input->post('nameproduct'),
 					'product_msp' => $this->input->post('maproduct'),
 					'product_mt' => $this->input->post('mtprodcut')
 				);
-				$this->load->model('AddproductModel');
-				$data['info'] = $this->AddproductModel->editProduct($data_update,$id);
-				$this->session->set_flashdata("flash_mess", "sucess");
+				//$this->load->model('AddproductModel');
+				$this->AddproductModel->editProduct($data_update,$id);
 				redirect(base_url() . "addproduct/listproduct");
-			}
 		}
 		$this->load->view('header');
 		$this->load->view('editProduct',$data);

@@ -34,9 +34,15 @@
 		</div>
 			<div class="fileupload btn btn-success waves-effect waves-light btn-sm mb-3">
 				<span><i class="ion-upload m-r-5"></i>Upload Files</span>
-				<input class="upload" type="file" multiple="" name="files">
+				<input class="upload" type="file" name="files" id="files" multiple>
 			</div><br>
+			<div style="clear:both"></div>
+		<br />
+		<br />
+		<div id="uploaded_images"></div>
 			<a href="#"><button type="submit" class="btn btn-primary">Submit</button></a>
 </section>
 
 </body>
+</html>
+<

@@ -13,10 +13,10 @@ class Addproduct extends CI_Controller
 		$data['title'] = "Tạo Sản Phẩm";
 		$this->load->view('footer');
 	}
+// Tạo tài khoản - img ---------------------------------
 	public function add(){
 		$this->load->model('AddproductModel');
 		$this->load->library('form_validation');
-
 		$this->form_validation->set_rules('skv', 'skv', 'required');
 		$this->form_validation->set_rules('nameproduct', 'nameproduct', 'required',
 			array('required' => 'You must provide a %s.')
@@ -30,24 +30,39 @@ class Addproduct extends CI_Controller
 				"product_msp"=>$this->input->post('maproduct'),
 				"product_mt"=>$this->input->post('mtprodcut')
 			);
+
 			if ($_FILES['files']['name']) {
-				$config['upload_path'] = './uploads/uploads_product';
-				$config['allowed_types'] = 'gif|jpg|png';
-				$this->load->library("upload", $config);
-				$this->upload->initialize($config);
-				if ($this->upload->do_upload('files')) {
-					$fileData = $this->upload->data();
-					$dataInsert['product_img'] = $fileData['file_name'];
+				$pattern='/^[^a-z0-9]+$/';
+				$filesCount = count($_FILES['files']['name']);
+				$filesCount= preg_replace($pattern,'',$filesCount);
+
+				for($i = 0; $i < $filesCount; $i++){move_uploaded_file($_FILES["files"]["name"],"./uploads/".uniqid(rand()).'.'.$filesCount);
+					$_FILES['file']['name']     = $_FILES['files']['name'][$i];
+					$_FILES['file']['type']     = $_FILES['files']['type'][$i];
+					$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+					$_FILES['file']['error']     = $_FILES['files']['error'][$i];
+					$_FILES['file']['size']     = $_FILES['files']['size'][$i];
+
+					$config['upload_path'] = './uploads/uploads_product';
+					$config['allowed_types'] = 'gif|jpg|png';
+					$this->load->library("upload", $config);
+					$this->upload->initialize($config);
+
+					if ($this->upload->do_upload('file')) {
+						$fileData = $this->upload->data();
+						$data_insert['product_img'] = $data_insert['product_img'].",".$fileData['file_name'];
+					}
 				}
 			}
 				$this->AddproductModel->insertProduct($data_insert);
-				echo "<script>alert('Đăng Sản Phẩm Thành Công');</script>";
+				echo "<script>alert('Tạo Sản Phẩm Thành Công');</script>";
 				redirect(base_url()."addproduct/listproduct");
 		}
 		$this->load->view('header');
 		$this->load->view('add_product');
 		$this->load->view('footer');
 	}
+// List danh sách *-------------------------------------------
 	public function listproduct(){
 		$this->load->helper("url");
 		$this->load->model('AddproductModel');
@@ -56,12 +71,13 @@ class Addproduct extends CI_Controller
 		$this->load->view('list_product',$data);
 		$this->load->view('footer');
 	}
+// Xóa Sản Phẩm *-----------------------------------------------
 	public function del($id){
-
 		$this->load->model('AddproductModel');
 		$this->AddproductModel->delProduct($id);
 		redirect(base_url()."addproduct/listproduct");
 	}
+// Sửa Sản Phẩm *-----------------------------------------------
 	public function edit($id)
 	{
 		$this->load->model('AddproductModel');

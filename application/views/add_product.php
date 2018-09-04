@@ -26,23 +26,20 @@
 			<input id="confirm" name="maproduct" class="required form-control" type="text" size="200px>
 		</div>
 	</div><br>
-	<div class="form-group row">
+		<div class="form-group row" >
 			<label class="col-2 col-form-label">Text area</label>
 			<div class="col-12">
-				<textarea class="form-control" rows="10" name="mtprodcut"></textarea>
+				<textarea class="form-control" rows="10" name="mtprodcut" style="margin-bottom:10px"></textarea>
 			</div>
 		</div>
 			<div class="fileupload btn btn-success waves-effect waves-light btn-sm mb-3">
 				<span><i class="ion-upload m-r-5"></i>Upload Files</span>
-				<input class="upload" type="file" name="files" id="files" multiple>
+				<input class="upload" type="file" name="files[]" id="files" multiple>
+
 			</div><br>
-			<div style="clear:both"></div>
-		<br />
-		<br />
-		<div id="uploaded_images"></div>
+
 			<a href="#"><button type="submit" class="btn btn-primary">Submit</button></a>
 </section>
 
 </body>
 </html>
-<

@@ -317,11 +317,17 @@ class ProductShopeeCreatModel extends CI_Model
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cot, $data[$i]->sku);
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cot, $data[$i]->name);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$cot, $data[$i]->category_id);
-
-				
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$cot, 0);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$cot, 0);
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$cot, 2);
+				$this->load->database();
+				$this->db->like('sellersku', $data[$i]->sku);
+				$this->db->limit(10);
+				$sku = $this->db->get('product');
+				$sku = $sku->result();
+				//var_dump($sku);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$cot, $sku[0]->package_weight);
+				$skus = json_decode($sku[0]->sellersku, TRUE);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$cot, $skus[0]['price']);
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$cot, $skus[0]['quantity']);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$cot, 2);
 	}
 
 		// Rename sheet

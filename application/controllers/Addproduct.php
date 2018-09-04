@@ -32,11 +32,8 @@ class Addproduct extends CI_Controller
 			);
 
 			if ($_FILES['files']['name']) {
-				$pattern='/^[^a-z0-9]+$/';
 				$filesCount = count($_FILES['files']['name']);
-				$filesCount= preg_replace($pattern,'',$filesCount);
-
-				for($i = 0; $i < $filesCount; $i++){move_uploaded_file($_FILES["files"]["name"],"./uploads/".uniqid(rand()).'.'.$filesCount);
+				for($i = 0; $i < $filesCount; $i++){
 					$_FILES['file']['name']     = $_FILES['files']['name'][$i];
 					$_FILES['file']['type']     = $_FILES['files']['type'][$i];
 					$_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];

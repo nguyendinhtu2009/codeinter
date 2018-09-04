@@ -177,7 +177,7 @@
                                     <li><a href="#">Cập Nhật</a></li>
                                     <li><a href="#">Category</a></li>
                                     <li><a href="<?php echo base_url(); ?>addproduct/listproduct">Danh Sách</a></li>
-                                    <li><a href="#">Kho Ảnh</a></li>
+                                    <li><a href="<?php echo base_url(); ?>khoproduct/khohang">Kho Ảnh</a></li>
                                 </ul>
                             </li>
                             <li class="has_sub">

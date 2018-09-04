@@ -9,6 +9,7 @@
 				<th class="font-weight-medium">SKV</th>
 				<th class="font-weight-medium">Danh Mục</th>
 				<th class="font-weight-medium">Ngày Đăng</th>
+				<th class="font-weight-medium">Ảnh</th>
 				<th class="font-weight-medium">Xóa</th>
 				<th class="font-weight-medium">Sửa</th>
 			</tr>

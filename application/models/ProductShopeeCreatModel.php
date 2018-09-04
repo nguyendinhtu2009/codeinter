@@ -275,16 +275,25 @@ class ProductShopeeCreatModel extends CI_Model
 						     $data = array(
 						      'id_shopee'  => $tab_1,
 						      'sku'   => $tab_2,
+						      'name'  => $tab_3,
+						      'category_id' => $tab_4,
 						      'source'    => $seller_id
 						     );
+						     $this->db->trans_start(FALSE);
 							 $this->db->insert('product_shopee', $data);
+							 $this->db->trans_complete();
+						     $db_error = $this->db->error();
+						        if (!empty($db_error)) {
+						        	$this->db->where('id_shopee', $tab_1);
+            						$this->db->update('product_shopee', $data);
+						        }
 						    }
 				   }
 
 			   return FALSE;
 	}
 
-	public function Shopee_Update_Product(){
+	public function Shopee_Update_Product($seller_id){
 		$objPHPExcel = new PHPExcel();
 		// Create a first sheet, representing sales data
 		$objPHPExcel->setActiveSheetIndex(0);
@@ -298,22 +307,21 @@ class ProductShopeeCreatModel extends CI_Model
 		$objPHPExcel->getActiveSheet()->setCellValue('H1', 'Giao hàng');
 		$row = 3;
 		$this->load->database();
-		$data = $this->db->get('product');
+		$this->db->where('source', $seller_id);
+		$data = $this->db->get('product_shopee');
 		$data = $data->result();
 	for($i=0;$i<count($data);$i++){
 				$cot = $row++;
-				$sku = json_decode($data[$i]->sellersku, TRUE);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$cot, $data[$i]->shopee_category);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cot, $data[$i]->name);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cot, strip_tags(html_entity_decode($data[$i]->short_description)));
-			if(count($sku) == 1){
-				$weight = $sku[0]['package_weight'] * 1000;
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$cot, $sku[0]['price']);
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$cot, $sku[0]['Available']);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$cot, $weight);
+
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$cot, $data[$i]->id_shopee);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cot, $data[$i]->sku);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cot, $data[$i]->name);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$cot, $data[$i]->category_id);
+
+				
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$cot, 0);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$cot, 0);
 				$objPHPExcel->getActiveSheet()->setCellValue('G'.$cot, 2);
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$cot, $sku[0]['SellerSku']);
-			}
 	}
 
 		// Rename sheet

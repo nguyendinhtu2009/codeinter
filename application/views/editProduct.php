@@ -36,7 +36,7 @@
 				<span><i class="ion-upload m-r-5"></i>Upload Files</span>
 				<input class="upload" type="file">
 			</div><br>
-			<button type="submit" class="btn btn-primary" name="ok" value="submit">Submit</button>
+			<button type="submit" class="btn btn-primary" name="ok" value="submit">Update</button>
 </section>
 
 </body>

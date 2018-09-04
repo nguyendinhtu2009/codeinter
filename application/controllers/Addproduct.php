@@ -30,16 +30,7 @@ class Addproduct extends CI_Controller
 				"product_msp"=>$this->input->post('maproduct'),
 				"product_mt"=>$this->input->post('mtprodcut')
 			);
-			if ($_FILES['files']['name']) {
-				$config['upload_path'] = './uploads/uploads_product';
-				$config['allowed_types'] = 'gif|jpg|png';
-				$this->load->library("upload", $config);
-				$this->upload->initialize($config);
-				if ($this->upload->do_upload('files')) {
-					$fileData = $this->upload->data();
-					$dataInsert['product_img'] = $fileData['file_name'];
-				}
-			}
+
 				$this->AddproductModel->insertProduct($data_insert);
 				echo "<script>alert('Đăng Sản Phẩm Thành Công');</script>";
 				redirect(base_url()."addproduct/listproduct");

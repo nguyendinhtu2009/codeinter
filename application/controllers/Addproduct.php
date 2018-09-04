@@ -57,7 +57,7 @@ class Addproduct extends CI_Controller
 	public function edit()
 	{
 		$id=$this->uri->segment(3);
-		var_dump($id);
+		echo $id;
 		$this->load->model('AddproductModel');
 		$data['info']=$this->AddproductModel->getByIdProduct($id);
 		if($this->input->post('ok')){

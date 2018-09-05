@@ -1,6 +1,6 @@
 <?php
 /**
-* 
+* DDK
 */
 class ProductLazDetail extends CI_Controller
 {	

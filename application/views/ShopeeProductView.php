@@ -1,3 +1,4 @@
+<?php var_dump($data); ?>
 <body>
  <div class="container">
   <br />
@@ -6,7 +7,7 @@
    <p>
    <input type="file" name="file" id="file" required accept=".xls, .xlsx" /></p>
    <select name="seller_id" id="inputState" class="form-control">Choose
-     <option value="Lyole"> Shop 1 </option>
+     <option value="poseidon1991"> Shop 1 </option>
      <option value="2"> Shop 2 </option>
      <option value="3"> Shop 3 </option>
    </section>

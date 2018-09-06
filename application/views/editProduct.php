@@ -27,20 +27,21 @@
 		</div>
 	</div><br>
 	<div class="form-group row">
-				<label class="col-2 col-form-label">Text area</label>
+				<label class="col-2 col-form-label">Mô Tả Sản Phẩm</label>
 				<div class="col-12">
 					<textarea class="form-control" rows="10" name="mtprodcut" value=""><?php echo $info['product_mt'];?></textarea>
 				</div>
 			</div>
 			<br class="fileupload btn btn-success waves-effect waves-light btn-sm mb-3">
 
-				<input class="upload" type="file"></ br>
+				<input class="upload" type="file" name="files[]" id="files" multiple>
 				<?php
 				$img = explode(',', $info['product_img']);
 					for($i=1;$i<count($img);$i++){
 					echo "<img src='".base_url()."/uploads/uploads_product/$img[$i]' width='150' />";
 				}
 				?>
+
 			</div><br>
 			<button type="submit" class="btn btn-primary" name="ok" value="submit">Update</button>
 </section>

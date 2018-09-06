@@ -26,6 +26,12 @@
 			<input id="confirm" name="maproduct" class="required form-control" type="text" size="200px>
 		</div>
 	</div><br>
+	<div class="form-group clearfix">
+			<label class="control-label " for="teproduct">Giá Tiền Tệ *</label>
+			<div class="">
+				<input id="confirm" name="teproduct" class="required form-control" type="text" size="200px>
+		</div>
+	</div><br>
 		<div class="form-group row" >
 			<label class="col-2 col-form-label">Mô Tả Sản Phẩm</label>
 			<div class="col-12">

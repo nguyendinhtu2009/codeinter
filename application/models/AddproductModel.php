@@ -8,7 +8,7 @@ class AddproductModel extends CI_Model{
 		$this->db->insert($this->_table,$data);
 	}
 	public function listAddProduct(){
-		$this->db->select("id,product_skv,product_name,product_msp,product_mt,product_date,product_img");
+		$this->db->select("id,product_skv,product_name,product_msp,product_mt,product_date,product_img,product_te,product_vn,product_pricelz,product_chenh");
 		$this->db->order_by("id","desc");
 		$this->db->limit(10);
 		return $this->db->get($this->_table)->result_array();

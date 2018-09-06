@@ -29,6 +29,7 @@ class Addproduct extends CI_Controller
 				"product_skv"=>$this->input->post('skv'),
 				"product_name"=>$this->input->post('nameproduct'),
 				"product_msp"=>$this->input->post('maproduct'),
+				"product_te"=>$this->input->post('teproduct'),
 				"product_mt"=>$this->input->post('mtprodcut')
 			);
 
